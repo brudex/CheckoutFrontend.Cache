@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply antialiased text-gray-800;
+}
+
+/* Smooth transitions */
+.fade-enter-active,
+.fade-leave-active {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  @apply opacity-0;
+}
+
+/* Custom form styling */
+input {
+  @apply transition-all duration-200;
+}
+
+input:focus {
+  @apply outline-none ring-2 ring-opacity-50;
+}
