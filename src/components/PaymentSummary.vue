@@ -1,5 +1,17 @@
 <template>
   <div class="space-y-6">
+    <!-- Company Logo and Name -->
+    <div class="flex items-center gap-3 pb-4 border-b border-gray-200">
+      <div class="bg-blue-600 p-2 rounded-lg">
+        <Building2 class="w-6 h-6 text-white" />
+      </div>
+      <div>
+        <h2 class="font-semibold text-gray-900">TechPay Solutions</h2>
+        <p class="text-sm text-gray-500">Secure Payment Processing</p>
+      </div>
+    </div>
+    
+    <!-- Payment Summary Heading -->
     <h2 class="text-lg font-semibold text-gray-900">Payment Summary</h2>
     
     <div class="space-y-4">
@@ -39,7 +51,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Shield } from 'lucide-vue-next';
+import { Shield, Building2 } from 'lucide-vue-next';
 
 const props = defineProps<{
   amount: number;
