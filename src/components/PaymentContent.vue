@@ -11,11 +11,16 @@
     >
       <component 
         :is="currentPaymentComponent" 
+        v-if="isCurrentTabEnabled"
         @update:phone="updatePhoneData"
       />
+      <div v-else class="p-8 text-center">
+        <p class="text-gray-500">This payment method is currently unavailable.</p>
+      </div>
     </Transition>
 
     <PaymentButton 
+      v-if="isCurrentTabEnabled"
       :payment-type="selectedTab"
       @click="handlePayment"
     />
@@ -28,6 +33,7 @@ import CryptoPayment from './CryptoPayment.vue';
 import VisaPayment from './VisaPayment.vue';
 import MobileMoneyPayment from './mobile/MobileMoneyPayment.vue';
 import PaymentButton from './PaymentButton.vue';
+import { usePaymentModes } from '../composables/usePaymentModes';
 
 const props = defineProps<{
   selectedTab: string;
@@ -37,7 +43,17 @@ const emit = defineEmits<{
   (e: 'process-payment', data: any): void;
 }>();
 
-const phoneData = ref({ countryCode: '', phoneNumber: '' });
+const { isPaymentModeEnabled } = usePaymentModes();
+
+const tabToModeMapping = {
+  visa: 'card',
+  mobile: 'wallet',
+  crypto: 'crypto'
+} as const;
+
+const isCurrentTabEnabled = computed(() => 
+  isPaymentModeEnabled(tabToModeMapping[props.selectedTab as keyof typeof tabToModeMapping])
+);
 
 const currentPaymentComponent = computed(() => {
   switch (props.selectedTab) {
@@ -48,11 +64,13 @@ const currentPaymentComponent = computed(() => {
     case 'mobile':
       return MobileMoneyPayment;
     default:
-      return CryptoPayment;
+      return null;
   }
 });
 
-const updatePhoneData = (data: { countryCode: string; phoneNumber: string }) => {
+const phoneData = ref({ countryCode: '', phoneNumber: '', network: '' });
+
+const updatePhoneData = (data: { countryCode: string; phoneNumber: string; network: string }) => {
   phoneData.value = data;
 };
 
