@@ -5,4 +5,11 @@ export interface Country {
   flagUrl: string;
   provider: string;
   placeholder: string;
+  networks: string[];
+}
+
+export interface PhoneData {
+  countryCode: string;
+  phoneNumber: string;
+  network: string;
 }

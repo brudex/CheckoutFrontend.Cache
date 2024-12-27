@@ -5,6 +5,11 @@
       :countries="countries"
     />
 
+    <NetworkSelector
+      v-model="selectedNetwork"
+      :networks="selectedCountry.networks"
+    />
+
     <div class="space-y-2">
       <label for="phone" class="block text-sm font-medium text-gray-700">
         Phone Number
@@ -30,7 +35,7 @@
         />
       </div>
       <p class="text-sm text-gray-500">
-        Enter the phone number associated with your {{ selectedCountry.provider }} account
+        Enter the phone number associated with your {{ selectedNetwork }} account
       </p>
     </div>
   </div>
@@ -39,22 +44,27 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import CountrySelector from './CountrySelector.vue';
+import NetworkSelector from './NetworkSelector.vue';
 import { type Country } from '../../types/mobile-money';
 import { countries } from '../../data/countries';
 
 const emit = defineEmits<{
-  (e: 'update:phone', value: { countryCode: string; phoneNumber: string }): void;
+  (e: 'update:phone', value: { countryCode: string; phoneNumber: string; network: string }): void;
 }>();
 
 const selectedCountry = ref(countries[0]);
+const selectedNetwork = ref(countries[0].networks[0]);
 const phoneNumber = ref('');
 
 const emitPhoneData = () => {
   emit('update:phone', {
     countryCode: selectedCountry.value.dialCode,
     phoneNumber: phoneNumber.value,
+    network: selectedNetwork.value
   });
 };
 
-watch(selectedCountry, emitPhoneData);
+watch([selectedCountry, selectedNetwork], () => {
+  emitPhoneData();
+});
 </script>
