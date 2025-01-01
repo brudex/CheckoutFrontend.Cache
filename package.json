@@ -14,7 +14,8 @@
     "lucide-vue-next": "^0.344.0",
     "@vueuse/core": "^10.9.0",
     "qrcode-vue3": "^1.6.8",
-    "@headlessui/vue": "^1.7.19"
+    "@headlessui/vue": "^1.7.19",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

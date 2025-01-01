@@ -25,9 +25,10 @@
             <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
               <DialogTitle
                 as="h3"
-                class="text-lg font-medium leading-6 text-gray-900"
+                class="text-xl font-semibold leading-6 text-center mb-4"
+                :class="statusTextColor"
               >
-                Payment Status
+                {{ status === 'loading' ? 'Processing' : status.toUpperCase() }}
               </DialogTitle>
 
               <div class="mt-4">
@@ -42,7 +43,7 @@
                     class="mx-auto h-12 w-12"
                     :class="statusIconColor"
                   />
-                  <p class="mt-4 text-sm" :class="statusTextColor">{{ message }}</p>
+                  <p class="mt-4 text-sm text-gray-600">{{ message }}</p>
                 </div>
               </div>
             </DialogPanel>
@@ -99,11 +100,11 @@ const statusIconColor = computed(() => {
 const statusTextColor = computed(() => {
   switch (props.status) {
     case 'success':
-      return 'text-green-700';
+      return 'text-green-600';
     case 'error':
-      return 'text-red-700';
+      return 'text-red-600';
     default:
-      return 'text-gray-700';
+      return 'text-mobile-600';
   }
 });
 

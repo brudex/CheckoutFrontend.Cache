@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { countries } from '../data/countries';
-import { sendWalletPaymentRequest } from '../utils/api';
+import { sendWalletPaymentRequest } from '../api/payments';
 import { usePaymentStatus } from './usePaymentStatus';
 import type { Country } from '../types/mobile-money';
 

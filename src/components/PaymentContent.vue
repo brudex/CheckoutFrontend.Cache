@@ -12,6 +12,7 @@
       <component 
         :is="currentPaymentComponent" 
         v-if="isCurrentTabEnabled"
+        ref="paymentComponentRef"
         @update:phone="updatePhoneData"
       />
       <div v-else class="p-8 text-center">
@@ -22,6 +23,7 @@
     <PaymentButton 
       v-if="isCurrentTabEnabled"
       :payment-type="selectedTab"
+      :disabled="!isPaymentEnabled"
       @click="handlePayment"
     />
   </div>
@@ -34,6 +36,7 @@ import VisaPayment from './VisaPayment.vue';
 import MobileMoneyPayment from './mobile/MobileMoneyPayment.vue';
 import PaymentButton from './PaymentButton.vue';
 import { usePaymentModes } from '../composables/usePaymentModes';
+import { useOrderDetails } from '../composables/useOrderDetails';
 
 const props = defineProps<{
   selectedTab: string;
@@ -43,7 +46,9 @@ const emit = defineEmits<{
   (e: 'process-payment', data: any): void;
 }>();
 
+const paymentComponentRef = ref();
 const { isPaymentModeEnabled } = usePaymentModes();
+const { isPaymentEnabled } = useOrderDetails();
 
 const tabToModeMapping = {
   visa: 'card',
@@ -74,11 +79,17 @@ const updatePhoneData = (data: { countryCode: string; phoneNumber: string; netwo
   phoneData.value = data;
 };
 
-const handlePayment = () => {
-  const paymentData = props.selectedTab === 'mobile' 
-    ? { type: 'mobile', ...phoneData.value }
-    : { type: props.selectedTab };
+const handlePayment = async () => {
+  if (!isPaymentEnabled.value) return;
   
-  emit('process-payment', paymentData);
+  if (props.selectedTab === 'mobile' && paymentComponentRef.value?.initiatePayment) {
+    await paymentComponentRef.value.initiatePayment();
+  } else {
+    const paymentData = props.selectedTab === 'mobile' 
+      ? { type: 'mobile', ...phoneData.value }
+      : { type: props.selectedTab };
+    
+    emit('process-payment', paymentData);
+  }
 };
 </script>

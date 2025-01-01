@@ -5,4 +5,7 @@ export interface OrderDetails {
   transactionId: string;
   orderDescription: string;
   logoUrl?: string;
+  status: string;
+  redirectUrl?: string;
+  paymentStatus: 'PENDING' | 'NOT_INITIATED' | 'COMPLETED' | 'FAILED';
 }

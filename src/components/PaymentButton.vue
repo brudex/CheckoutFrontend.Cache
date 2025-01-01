@@ -2,8 +2,10 @@
   <button
     :class="[
       'mt-8 w-full py-4 px-6 rounded-lg text-white font-medium transition-all duration-200',
-      buttonStyles[paymentType]
+      buttonStyles[paymentType],
+      disabled ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'
     ]"
+    :disabled="disabled"
     @click="$emit('click')"
   >
     {{ buttonText }}
@@ -15,12 +17,13 @@ import { computed } from 'vue';
 
 const props = defineProps<{
   paymentType: string;
+  disabled?: boolean;
 }>();
 
 const buttonStyles = {
-  visa: 'bg-visa-500 hover:bg-visa-600',
-  mobile: 'bg-mobile-500 hover:bg-mobile-600',
-  crypto: 'bg-crypto-500 hover:bg-crypto-600'
+  visa: 'bg-visa-500',
+  mobile: 'bg-mobile-500',
+  crypto: 'bg-crypto-500'
 } as const;
 
 const buttonText = computed(() => {
