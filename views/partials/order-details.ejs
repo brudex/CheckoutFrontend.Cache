@@ -1,0 +1,60 @@
+<div class="p-4" x-data="orderDetails">
+    <!-- Company Logo/Name -->
+    <div class="text-center mb-4">
+        <template x-if="orderDetails?.logoUrl">
+            <img :src="orderDetails.logoUrl" alt="Company Logo" class="h-12 object-contain">
+        </template>
+        <template x-if="!orderDetails?.logoUrl">
+            <div class="d-flex align-items-center gap-3 justify-content-center">
+                <div class="bg-primary p-2 rounded-3">
+                    <i data-lucide="building-2" class="text-white"></i>
+                </div>
+                <div>
+                    <h2 class="h5 mb-0">TechPay Solutions</h2>
+                    <p class="text-muted small mb-0">Secure Payment Processing</p>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Order Information -->
+    <div class="bg-light rounded-3 p-3 mb-4" x-show="orderDetails?.orderId || orderDetails?.email">
+        <div class="mb-2" x-show="orderDetails?.orderId">
+            <span class="text-muted">Order ID:</span>
+            <span class="fw-semibold" x-text="orderDetails.orderId"></span>
+        </div>
+        <div x-show="orderDetails?.email">
+            <span class="text-muted">Email:</span>
+            <span class="fw-semibold" x-text="orderDetails.email"></span>
+        </div>
+    </div>
+
+    <!-- Payment Summary -->
+    <div class="mb-4">
+        <h3 class="h5 mb-3">Payment Summary</h3>
+        
+        <div class="bg-light rounded-3 p-3 mb-3" x-show="orderDetails?.orderDescription">
+            <p class="mb-0" x-text="orderDetails.orderDescription"></p>
+        </div>
+
+        <div class="border-top pt-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">Total</span>
+                <span class="h4 mb-0" x-text="formatPrice(orderDetails?.amount || 0)"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Notice -->
+    <div class="bg-primary bg-opacity-10 rounded-3 p-3">
+        <div class="d-flex gap-3">
+            <i data-lucide="shield" class="text-primary"></i>
+            <div>
+                <h4 class="h6 mb-1">Secure Payment</h4>
+                <p class="small mb-0 text-primary">
+                    Your payment information is encrypted and secure
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

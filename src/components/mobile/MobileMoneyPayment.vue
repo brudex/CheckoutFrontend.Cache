@@ -32,7 +32,7 @@ import CountrySelector from './CountrySelector.vue';
 import NetworkSelector from './NetworkSelector.vue';
 import PhoneInput from './PhoneInput.vue';
 import PaymentStatusModal from '../PaymentStatusModal.vue';
-import { usePaymentFlow } from '../../composables/useWalletPaymentFlow';
+import { usePaymentFlow } from '../../composables/usePaymentFlow';
 
 const {
   selectedCountry,

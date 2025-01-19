@@ -18,6 +18,7 @@
           <div class="p-8">
             <PaymentContent 
               :selected-tab="selectedTab"
+              @process-payment="handlePayment"
             />
           </div>
         </div>
@@ -33,4 +34,8 @@ import PaymentContent from './components/PaymentContent.vue';
 import PaymentSummary from './components/PaymentSummary.vue';
 
 const selectedTab = ref('visa'); // Changed default tab to Visa
+
+const handlePayment = (paymentData: any) => {
+  console.log('Processing payment:', paymentData);
+};
 </script>
